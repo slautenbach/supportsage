@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "supportsage"
+version = "0.1.0"
+description = "A reproducible, low-VRAM LoRA fine-tuning project for customer-support response generation."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "slautenbach" }]
+dependencies = [
+  "accelerate>=1.2,<2",
+  "datasets>=3.2,<5",
+  "evaluate>=0.4,<1",
+  "gradio>=5.12,<7",
+  "numpy>=1.26,<3",
+  "peft>=0.14,<1",
+  "pyyaml>=6,<7",
+  "rouge-score>=0.1.2,<1",
+  "torch>=2.5,<3",
+  "transformers>=4.48,<6",
+  "trl>=0.15,<1",
+]
+
+[project.optional-dependencies]
+quantization = ["bitsandbytes>=0.45,<1"]
+dev = ["pytest>=8,<9", "pytest-cov>=6,<8", "ruff>=0.9,<1"]
+
+[project.scripts]
+supportsage-prepare = "supportsage.data:main"
+supportsage-train = "supportsage.train:main"
+supportsage-evaluate = "supportsage.evaluate:main"
+supportsage-demo = "supportsage.app:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/supportsage"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true

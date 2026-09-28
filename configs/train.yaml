@@ -1,0 +1,20 @@
+model_name: Qwen/Qwen2.5-0.5B-Instruct
+dataset_name: bitext/Bitext-customer-support-llm-chatbot-training-dataset
+output_dir: artifacts/supportsage-qwen-lora
+seed: 42
+train_samples: 4000
+eval_samples: 400
+max_length: 512
+num_train_epochs: 2
+learning_rate: 0.0002
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 16
+logging_steps: 10
+eval_steps: 100
+save_steps: 100
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+use_4bit: true
+
